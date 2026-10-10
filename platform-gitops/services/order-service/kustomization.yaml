@@ -7,4 +7,4 @@ resources:
 - service.yaml
 images:
 - name: ghcr.io/baljeetmalik/order-service
-  newTag: sha-0842199
+  newTag: sha-f152000
