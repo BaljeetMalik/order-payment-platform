@@ -41,4 +41,4 @@ def read_root():
 
 @app.get("/health")
 def read_health():
-    return {"status": "up"}
+    return {"status": "healthy"}
