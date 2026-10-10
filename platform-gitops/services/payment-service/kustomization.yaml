@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: order-platform
 resources:
-  - migrate-job.yaml
-  - deployment.yaml
-  - service.yaml
+- migrate-job.yaml
+- deployment.yaml
+- service.yaml
 images:
-  - name: ghcr.io/baljeetmalik/payment-service
-    newTag: latest
+- name: ghcr.io/baljeetmalik/payment-service
+  newTag: sha-0842199
