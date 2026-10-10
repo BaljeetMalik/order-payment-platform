@@ -1,0 +1,2 @@
+Raw-SQL Alembic migrations. Applied automatically on app startup
+(set RUN_MIGRATIONS=false to skip), or manually with `uv run alembic upgrade head`.

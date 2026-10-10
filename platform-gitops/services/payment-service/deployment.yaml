@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  labels: { app: payment-service }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: payment-service }
+  template:
+    metadata:
+      labels: { app: payment-service }
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: payment-service
+          image: ghcr.io/baljeetmalik/payment-service      # tag set by kustomization.yaml
+          ports:
+            - name: http
+              containerPort: 8001
+          envFrom:
+            - secretRef: { name: payment-service-env }      # DATABASE_URL (Phase 5)
+          env:
+            - { name: KAFKA_BOOTSTRAP_SERVERS, value: "kafka:9092" }
+            - { name: RUN_MIGRATIONS, value: "false" }    # the migrate Job does it
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { cpu: 500m, memory: 512Mi }
